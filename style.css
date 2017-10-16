@@ -1,0 +1,15 @@
+#c {
+    display: inline;
+    border: .25em solid black;
+}
+
+#result-col {
+    display: inline-block;
+    vertical-align: top;
+    overflow-y: scroll;
+    text-align: left;
+}
+
+body {
+    text-align: center;
+}

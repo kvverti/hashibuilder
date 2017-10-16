@@ -1,0 +1,28 @@
+<head>
+    <title>Hashi Builder</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <h1>Hashi Builder</h1>
+    <p id="desc">
+        Hashi Builder allows you to easily create Hashi puzzles and convert them into text
+        input for Homework 6.<br/>
+        To place a node, click on the board. Left-clicking a node will
+        increment its count, and right-clicking a node will remove it from the board.<br/>
+        Setting the dimensions of the board will clear any current nodes.
+    </p>
+    <div>
+        <canvas id="c", onclick="canvasClick(false)" oncontextmenu="canvasClick(true)"></canvas>
+        <code id="result-col">Your Hashi code will appear here<div id="result"></div></code>
+    </div>
+    <p>
+        <span>Board width:</span>
+        <input type="text" id="width"></input>
+        <span>Board height:</span>
+        <input type="text" id="height"></input>
+    </p>
+    <input type="button" onclick="setDims()" value="Set Dimensions"></input>
+    <input type="button" onclick="makeText()" value="Create Text"></input>
+    <input type="button" onclick="resetBoard()" value="Reset Board"></input>
+    <script type="text/javascript" src="grid.js"></script>
+</body>
