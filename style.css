@@ -6,8 +6,15 @@
 #result-col {
     display: inline-block;
     vertical-align: top;
-    overflow-y: scroll;
     text-align: left;
+}
+
+#result {
+    display: block;
+    overflow-y: scroll;
+    margin-bottom: .5em;
+    resize: none;
+    width: 15em;
 }
 
 body {

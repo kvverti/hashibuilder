@@ -13,7 +13,10 @@
     </p>
     <div>
         <canvas id="c", onclick="canvasClick(false)" oncontextmenu="canvasClick(true)"></canvas>
-        <code id="result-col">Your Hashi code will appear here<div id="result"></div></code>
+        <div id="result-col">
+            <textarea id="result" placeholder="Your Hashi code will appear here" readonly="true"></textarea>
+            <input type="button" onclick="selectText()" value="Select Text"></input>
+        </div>
     </div>
     <p>
         <span>Board width:</span>

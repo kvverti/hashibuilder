@@ -1,6 +1,5 @@
 var canvas = document.getElementById("c");
 var ctx = canvas.getContext("2d");
-var resultCol = document.getElementById("result-col");
 var resultBlock = document.getElementById("result");
 var bwidth = document.getElementById("width");
 var bheight = document.getElementById("height");
@@ -16,7 +15,7 @@ function drawBoard() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     canvas.width = (board.width + 1) * PIX_PER_SQUARE;
     canvas.height = (board.height + 1) * PIX_PER_SQUARE;
-    resultCol.style.height = canvas.height;
+    result.style.height = canvas.height - 24;
     var idx;
     for(idx = 1; idx <= board.width; idx++) {
         ctx.moveTo(idx * PIX_PER_SQUARE, PIX_PER_SQUARE);
@@ -81,10 +80,12 @@ function setDims() {
     var w = parseInt(bwidth.value);
     var h = parseInt(bheight.value);
     if(w > 0 && h > 0) {
-        board.dots.length = 0;
-        board.width = w;
-        board.height = h;
-        drawBoard();
+        if(board.dots.length == 0 || confirm("Board will be cleared. Continue?")) {
+            board.dots.length = 0;
+            board.width = w;
+            board.height = h;
+            drawBoard();
+        }
     } else
         alert("Invalid dimensions");
 }
@@ -93,8 +94,14 @@ function makeText() {
     var str = "";
     for(var i = 0; i < board.dots.length; i++) {
         var dot = board.dots[i];
-        str += (dot.x - 1) + " " + (board.height - dot.y) + " " + dot.value + "<br/>";
+        str += (dot.x - 1) + " " + (board.height - dot.y) + " " + dot.value + "\n";
     }
     resultBlock.innerHTML = str;
+}
+
+function selectText() {
+    
+    resultBlock.focus();
+    resultBlock.select();
 }
 drawBoard();
