@@ -90,6 +90,30 @@ function setDims() {
         alert("Invalid dimensions");
 }
 
+function packBoard() {
+    if(board.dots.length == 0)
+        return;
+    var minx = board.width;
+    var maxx = 0;
+    var miny = board.height;
+    var maxy = 0;
+    for(var i = 0; i < board.dots.length; i++) {
+        var dot = board.dots[i];
+        minx = Math.min(minx, dot.x - 1);
+        maxx = Math.max(maxx, dot.x);
+        miny = Math.min(miny, dot.y - 1);
+        maxy = Math.max(maxy, dot.y);
+    }
+    for(var i = 0; i < board.dots.length; i++) {
+        var dot = board.dots[i];
+        dot.x -= minx;
+        dot.y -= miny;
+    }
+    board.width = maxx - minx;
+    board.height = maxy - miny;
+    drawBoard();
+}
+
 function makeText() {
     var str = "";
     for(var i = 0; i < board.dots.length; i++) {
