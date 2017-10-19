@@ -21,12 +21,13 @@
     </div>
     <p>
         <span>Board width:</span>
-        <input type="text" id="width"></input>
+        <input type="text" id="width" class="mod"></input>
         <span>Board height:</span>
-        <input type="text" id="height"></input>
+        <input type="text" id="height" class="mod"></input>
     </p>
-    <input type="button" onclick="setDims()" value="Set Dimensions"></input>
-    <input type="button" onclick="packBoard()" value="Pack Board"></input>
-    <input type="button" onclick="resetBoard()" value="Reset Board"></input>
+    <input type="button" onclick="toggleMode()" value="Toggle Mode"></input>
+    <input type="button" class="mod" onclick="setDims()" value="Set Dimensions"></input>
+    <input type="button" class="mod" onclick="packBoard()" value="Pack Board"></input>
+    <input type="button" class="mod" onclick="resetBoard()" value="Reset Board"></input>
     <script type="text/javascript" src="grid.js"></script>
 </body>
