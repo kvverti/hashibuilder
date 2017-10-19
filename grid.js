@@ -23,7 +23,7 @@ function drawBoard() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     canvas.width = (board.width + 1) * PIX_PER_SQUARE;
     canvas.height = (board.height + 1) * PIX_PER_SQUARE;
-    result.style.height = canvas.height - 24;
+    resultBlock.style.height = (canvas.height - 26) + "px";
     var idx;
     if(!board.solve) {
         for(idx = 1; idx <= board.width; idx++) {
@@ -130,6 +130,8 @@ function placeBridge(x, y, right) {
                 dot1.count -= c.count;
                 dot2.count -= c.count;
                 delete board.bridges[key];
+            } else {
+                board.selected = null;
             }
         } else if(board.bridges[key] != null) {
             var c = board.bridges[key];
@@ -200,12 +202,21 @@ function setDims() {
     var w = parseInt(bwidth.value);
     var h = parseInt(bheight.value);
     if(w > 0 && h > 0) {
-        if(board.dots.length == 0 || confirm("Board will be cleared. Continue?")) {
-            board.dots.length = 0;
-            board.width = w;
-            board.height = h;
-            drawBoard();
+        var confirmed = false;
+        for(var i = 0; i < board.dots.length; ) {
+            var dot = board.dots[i];
+            if(dot.x > w || dot.y > h) {
+                if(confirmed || confirm("Some dots will be cleared. Continue?")) {
+                    confirmed = true;
+                    board.dots.splice(i, 1);
+                } else
+                    return;
+            } else
+                i++;
         }
+        board.width = w;
+        board.height = h;
+        drawBoard();
     } else
         alert("Invalid dimensions");
 }
@@ -231,6 +242,8 @@ function packBoard() {
     }
     board.width = maxx - minx;
     board.height = maxy - miny;
+    bwidth.value = board.width;
+    bheight.value = board.height;
     drawBoard();
 }
 

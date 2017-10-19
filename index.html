@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+<html>
 <head>
     <title>Hashi Builder</title>
     <link rel="stylesheet" type="text/css" href="style.css">
@@ -14,16 +16,16 @@
     <div>
         <canvas id="c", onclick="canvasClick(false)" oncontextmenu="canvasClick(true)"></canvas>
         <div id="result-col">
-            <textarea id="result" placeholder="Your Hashi code will appear here" readonly="true"></textarea>
+            <textarea id="result" placeholder="Your Hashi code will appear here" readonly></textarea>
             <input type="button" onclick="makeText()" value="Create Text"></input>
             <input type="button" onclick="selectText()" value="Select Text"></input>
         </div>
     </div>
     <p>
         <span>Board width:</span>
-        <input type="text" id="width" class="mod"></input>
+        <input type="number" id="width" class="mod" min="1" value="8"></input>
         <span>Board height:</span>
-        <input type="text" id="height" class="mod"></input>
+        <input type="number" id="height" class="mod" min="1" value="8"></input>
     </p>
     <input type="button" onclick="toggleMode()" value="Toggle Mode"></input>
     <input type="button" class="mod" onclick="setDims()" value="Set Dimensions"></input>
@@ -31,3 +33,4 @@
     <input type="button" class="mod" onclick="resetBoard()" value="Reset Board"></input>
     <script type="text/javascript" src="grid.js"></script>
 </body>
+</html>
