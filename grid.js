@@ -125,15 +125,15 @@ function placeBridge(x, y, right) {
         }
         var key = mkKey(dot1, dot2);
         if(dot1.count == dot1.value || dot2.count == dot2.value) {
-            var c = board.bridges[key];
-            if(c != null) {
+            if(key in board.bridges) {
+                var c = board.bridges[key];
                 dot1.count -= c.count;
                 dot2.count -= c.count;
                 delete board.bridges[key];
             } else {
                 board.selected = null;
             }
-        } else if(board.bridges[key] != null) {
+        } else if(key in board.bridges) {
             var c = board.bridges[key];
             if(c.count == 1) {
                 c.count = 2;
@@ -199,14 +199,14 @@ function resetBoard() {
 }
 
 function setDims() {
-    var w = parseInt(bwidth.value);
-    var h = parseInt(bheight.value);
+    var w = parseInt(bwidth.value, 10);
+    var h = parseInt(bheight.value, 10);
     if(w > 0 && h > 0) {
         var confirmed = false;
         for(var i = 0; i < board.dots.length; ) {
             var dot = board.dots[i];
             if(dot.x > w || dot.y > h) {
-                if(confirmed || confirm("Some dots will be cleared. Continue?")) {
+                if(confirmed || confirm("Some nodes will be cleared. Continue?")) {
                     confirmed = true;
                     board.dots.splice(i, 1);
                 } else
@@ -253,13 +253,52 @@ function makeText() {
         var dot = board.dots[i];
         str += (dot.x - 1) + " " + (board.height - dot.y) + " " + dot.value + "\n";
     }
-    resultBlock.innerHTML = str;
+    resultBlock.value = str;
 }
 
-function selectText() {
-    
-    resultBlock.focus();
-    resultBlock.select();
+function loadText() {
+    if(board.dots.length > 0 && !confirm("Current nodes will be cleared. Continue?"))
+        return;
+    var arr = resultBlock.value.trim().split(/\s+/);
+    if(arr.length % 3 != 0) {
+        alert("Format not valid (bad length)");
+        return;
+    }
+    var w = 0;
+    var h = 0;
+    var dots = [];
+    for(var i = 0; i < arr.length; i += 3) {
+        var x = parseInt(arr[i], 10);
+        var y = parseInt(arr[i + 1], 10);
+        var value = parseInt(arr[i + 2], 10);
+        if(!(x >= 0 && y >= 0 && value >= 1 && value <= 8)) {
+            alert("Format not valid (bad number)");
+            return;
+        }
+        var dot = { x: x, y: y, value: value, count: 0 };
+        for(var j = 0; j < dots.length; j++) {
+            if(dots[j].x == dot.x && dots[j].y == dot.y) {
+                alert("Format not valid (duplicate node)");
+                return;
+            }
+        }
+        dots.push(dot);
+        w = Math.max(w, dot.x);
+        h = Math.max(h, dot.y);
+    }
+    for(var i = 0; i < dots.length; i++) {
+        var dot = dots[i];
+        dot.x++;
+        dot.y = h - dot.y + 1;
+    }
+    board.width = w + 1;
+    board.height = h + 1;
+    board.dots = dots;
+    board.bridges = {};
+    board.selected = null;
+    bwidth.value = board.width;
+    bheight.value = board.height;
+    drawBoard();
 }
 
 function toggleMode() {
